@@ -6,8 +6,6 @@ mkdir $base 2>/dev/null
 conf=$base/conf
 touch $conf
 
-
-
 setupService(){
     cat > /usr/local/bin/dnat.sh <<"AAAA"
 #! /bin/bash
