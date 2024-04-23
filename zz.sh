@@ -121,7 +121,6 @@ Set_Config(){
 	远程 IP\t: ${Green_font_prefix}${forwarding_ip}${Font_color_suffix}
 	转发类型\t: ${Green_font_prefix}${forwarding_type}${Font_color_suffix}
 ——————————————————————————————\n"
-	read -e -p "请按任意键继续，如有配置错误请使用 Ctrl+C 退出。" var
 }
 Add_forwarding(){
 	check_iptables
