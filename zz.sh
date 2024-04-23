@@ -63,14 +63,14 @@ install_iptables(){
 	echo -e "${Info} iptables 配置完毕 !"
 }
 Set_forwarding_port(){
-	read -e -p "请输入 iptables 欲转发至的 远程端口 [1-65535] (支持端口段 如 2333-6666, 被转发服务器):" forwarding_port
+	read -e -p "请输入 iptables 远程端口 [1-65535] (支持端口段 如 2333-6666, 被转发服务器):" forwarding_port
 	[[ -z "${forwarding_port}" ]] && echo "取消..." && exit 1
-	echo && echo -e "	欲转发端口 : ${Red_font_prefix}${forwarding_port}${Font_color_suffix}" && echo
+	echo && echo -e "	远程端口 : ${Red_font_prefix}${forwarding_port}${Font_color_suffix}" && echo
 }
 Set_forwarding_ip(){
-		read -e -p "请输入 iptables 欲转发至的 远程IP(被转发服务器):" forwarding_ip
+		read -e -p "请输入 iptables 远程IP(被转发服务器):" forwarding_ip
 		[[ -z "${forwarding_ip}" ]] && echo "取消..." && exit 1
-		echo && echo -e "	欲转发服务器IP : ${Red_font_prefix}${forwarding_ip}${Font_color_suffix}" && echo
+		echo && echo -e "	远程IP : ${Red_font_prefix}${forwarding_ip}${Font_color_suffix}" && echo
 }
 Set_local_port(){
 	echo -e "请输入 iptables 本地监听端口 [1-65535] (支持端口段 如 2333-6666)"
@@ -108,9 +108,9 @@ Set_forwarding_type(){
 	fi
 }
 Set_Config(){
+	Set_local_port
 	Set_forwarding_port
 	Set_forwarding_ip
-	Set_local_port
 	Set_local_ip
 	Set_forwarding_type
 	echo && echo -e "——————————————————————————————
@@ -263,29 +263,26 @@ echo && echo -e " iptables 端口转发一键管理脚本 ${Red_font_prefix}[v${
 ————————————
 注意：初次使用前请请务必执行 ${Green_font_prefix}1. 安装 iptables${Font_color_suffix}(不仅仅是安装)" && echo
 read -e -p " 请输入数字 [0-5]:" num
-
-do
-	case "$num" in
-		0)
-		Update_Shell
-		;;
-		1)
-		install_iptables
-		;;
-		2)
-		Uninstall_forwarding
-		;;
-		3)
-		View_forwarding
-		;;
-		4)
-		Add_forwarding
-		;;
-		5)
-		Del_forwarding
-		;;
-		*)
-		echo "请输入正确数字 [0-5]"
-		;;
-	esac
-done
+case "$num" in
+	0)
+	Update_Shell
+	;;
+	1)
+	install_iptables
+	;;
+	2)
+	Uninstall_forwarding
+	;;
+	3)
+	View_forwarding
+	;;
+	4)
+	Add_forwarding
+	;;
+	5)
+	Del_forwarding
+	;;
+	*)
+	echo "请输入正确数字 [0-5]"
+	;;
+esac
