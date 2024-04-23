@@ -73,22 +73,22 @@ Set_forwarding_ip(){
 		echo && echo -e "	远程IP : ${Red_font_prefix}${forwarding_ip}${Font_color_suffix}" && echo
 }
 Set_local_port(){
-	echo -e "请输入 iptables 本地监听端口 [1-65535] (支持端口段 如 2333-6666)"
+	echo -e "请输入 iptables 本地端口 [1-65535] (支持端口段 如 2333-6666)"
 	read -e -p "(默认端口: ${forwarding_port}):" local_port
 	[[ -z "${local_port}" ]] && local_port="${forwarding_port}"
-	echo && echo -e "	本地监听端口 : ${Red_font_prefix}${local_port}${Font_color_suffix}" && echo
+	echo && echo -e "	本地端口 : ${Red_font_prefix}${local_port}${Font_color_suffix}" && echo
 }
 Set_local_ip(){
-	read -e -p "请输入 本服务器的 网卡IP(注意是网卡绑定的IP，而不仅仅是公网IP，回车自动检测外网IP):" local_ip
+	read -e -p "请输入 本地 网卡IP(注意是网卡绑定的IP，而不仅仅是公网IP，回车自动检测外网IP):" local_ip
 	if [[ -z "${local_ip}" ]]; then
 		local_ip=$(wget -qO- -t1 -T2 ipinfo.io/ip)
 		if [[ -z "${local_ip}" ]]; then
 			echo "${Error} 无法检测到本服务器的公网IP，请手动输入"
-			read -e -p "请输入 本服务器的 网卡IP(注意是网卡绑定的IP，而不仅仅是公网IP):" local_ip
+			read -e -p "请输入 本地 网卡IP(注意是网卡绑定的IP，而不仅仅是公网IP):" local_ip
 			[[ -z "${local_ip}" ]] && echo "取消..." && exit 1
 		fi
 	fi
-	echo && echo -e "	本服务器IP : ${Red_font_prefix}${local_ip}${Font_color_suffix}" && echo
+	echo && echo -e "	本地IP : ${Red_font_prefix}${local_ip}${Font_color_suffix}" && echo
 }
 Set_forwarding_type(){
 	echo -e "请输入数字 来选择 iptables 转发类型:
@@ -115,10 +115,10 @@ Set_Config(){
 	Set_forwarding_type
 	echo && echo -e "——————————————————————————————
 	请检查 iptables 端口转发规则配置是否有误 !\n
-	本地监听端口    : ${Green_font_prefix}${local_port}${Font_color_suffix}
-	服务器 IP\t: ${Green_font_prefix}${local_ip}${Font_color_suffix}\n
-	欲转发的端口    : ${Green_font_prefix}${forwarding_port}${Font_color_suffix}
-	欲转发 IP\t: ${Green_font_prefix}${forwarding_ip}${Font_color_suffix}
+	本地端口    : ${Green_font_prefix}${local_port}${Font_color_suffix}
+	本地 IP\t: ${Green_font_prefix}${local_ip}${Font_color_suffix}\n
+	远程端口    : ${Green_font_prefix}${forwarding_port}${Font_color_suffix}
+	远程 IP\t: ${Green_font_prefix}${forwarding_ip}${Font_color_suffix}
 	转发类型\t: ${Green_font_prefix}${forwarding_type}${Font_color_suffix}
 ——————————————————————————————\n"
 	read -e -p "请按任意键继续，如有配置错误请使用 Ctrl+C 退出。" var
@@ -139,10 +139,10 @@ Add_forwarding(){
 	Save_iptables
 	clear && echo && echo -e "——————————————————————————————
 	iptables 端口转发规则配置完成 !\n
-	本地监听端口    : ${Green_font_prefix}${local_port}${Font_color_suffix}
-	服务器 IP\t: ${Green_font_prefix}${local_ip}${Font_color_suffix}\n
-	欲转发的端口    : ${Green_font_prefix}${forwarding_port_1}${Font_color_suffix}
-	欲转发 IP\t: ${Green_font_prefix}${forwarding_ip}${Font_color_suffix}
+	本地端口    : ${Green_font_prefix}${local_port}${Font_color_suffix}
+	本地 IP\t: ${Green_font_prefix}${local_ip}${Font_color_suffix}\n
+	远程端口    : ${Green_font_prefix}${forwarding_port_1}${Font_color_suffix}
+	远程 IP\t: ${Green_font_prefix}${forwarding_ip}${Font_color_suffix}
 	转发类型\t: ${Green_font_prefix}${forwarding_type}${Font_color_suffix}
 ——————————————————————————————\n"
 }
