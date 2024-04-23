@@ -263,26 +263,28 @@ echo && echo -e " iptables 端口转发一键管理脚本 ${Red_font_prefix}[v${
 ————————————
 注意：初次使用前请请务必执行 ${Green_font_prefix}1. 安装 iptables${Font_color_suffix}(不仅仅是安装)" && echo
 read -e -p " 请输入数字 [0-5]:" num
-case "$num" in
-	0)
-	Update_Shell
-	;;
-	1)
-	install_iptables
-	;;
-	2)
-	Uninstall_forwarding
-	;;
-	3)
-	View_forwarding
-	;;
-	4)
-	Add_forwarding
-	;;
-	5)
-	Del_forwarding
-	;;
-	*)
-	echo "请输入正确数字 [0-5]"
-	;;
-esac
+do
+	case "$num" in
+		0)
+		Update_Shell
+		;;
+		1)
+		install_iptables
+		;;
+		2)
+		Uninstall_forwarding
+		;;
+		3)
+		View_forwarding
+		;;
+		4)
+		Add_forwarding
+		;;
+		5)
+		Del_forwarding
+		;;
+		*)
+		echo "请输入正确数字 [0-5]"
+		;;
+	esac
+ one
