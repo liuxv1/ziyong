@@ -62,36 +62,22 @@ install_iptables(){
 	Set_iptables
 	echo -e "${Info} iptables 配置完毕 !"
 }
-
-
-
+Set_forwarding_port(){
+	read -e -p "请输入 iptables 欲转发至的 远程端口 [1-65535] (支持端口段 如 2333-6666, 被转发服务器):" forwarding_port
+	[[ -z "${forwarding_port}" ]] && echo "取消..." && exit 1
+	echo && echo -e "	欲转发端口 : ${Red_font_prefix}${forwarding_port}${Font_color_suffix}" && echo
+}
+Set_forwarding_ip(){
+		read -e -p "请输入 iptables 欲转发至的 远程IP(被转发服务器):" forwarding_ip
+		[[ -z "${forwarding_ip}" ]] && echo "取消..." && exit 1
+		echo && echo -e "	欲转发服务器IP : ${Red_font_prefix}${forwarding_ip}${Font_color_suffix}" && echo
+}
 Set_local_port(){
-	echo -e "请输入 iptables 本地端口 [1-65535] (支持端口段 如 2333-6666)"
+	echo -e "请输入 iptables 本地监听端口 [1-65535] (支持端口段 如 2333-6666)"
 	read -e -p "(默认端口: ${forwarding_port}):" local_port
 	[[ -z "${local_port}" ]] && local_port="${forwarding_port}"
-	echo && echo -e "	本地端口 : ${Red_font_prefix}${local_port}${Font_color_suffix}" && echo
+	echo && echo -e "	本地监听端口 : ${Red_font_prefix}${local_port}${Font_color_suffix}" && echo
 }
-
-
-
-
-Set_forwarding_port(){
-	read -e -p "请输入 iptables 远程端口 [1-65535] (支持端口段 如 2333-6666, 被转发服务器):" forwarding_port
-	[[ -z "${forwarding_port}" ]] && echo "取消..." && exit 1
-	echo && echo -e "	远程端口 : ${Red_font_prefix}${forwarding_port}${Font_color_suffix}" && echo
-}
-
-
-Set_forwarding_ip(){
-		read -e -p "请输入 iptables 远程IP(被转发服务器):" forwarding_ip
-		[[ -z "${forwarding_ip}" ]] && echo "取消..." && exit 1
-		echo && echo -e "	远程IP : ${Red_font_prefix}${forwarding_ip}${Font_color_suffix}" && echo
-}
-
-
-
-
-
 Set_local_ip(){
 	read -e -p "请输入 本服务器的 网卡IP(注意是网卡绑定的IP，而不仅仅是公网IP，回车自动检测外网IP):" local_ip
 	if [[ -z "${local_ip}" ]]; then
@@ -104,9 +90,6 @@ Set_local_ip(){
 	fi
 	echo && echo -e "	本服务器IP : ${Red_font_prefix}${local_ip}${Font_color_suffix}" && echo
 }
-
-
-
 Set_forwarding_type(){
 	echo -e "请输入数字 来选择 iptables 转发类型:
  1. TCP
@@ -124,16 +107,6 @@ Set_forwarding_type(){
 		forwarding_type="TCP+UDP"
 	fi
 }
-
-
-
-
-
-
-
-
-
-
 Set_Config(){
 	Set_forwarding_port
 	Set_forwarding_ip
@@ -290,26 +263,29 @@ echo && echo -e " iptables 端口转发一键管理脚本 ${Red_font_prefix}[v${
 ————————————
 注意：初次使用前请请务必执行 ${Green_font_prefix}1. 安装 iptables${Font_color_suffix}(不仅仅是安装)" && echo
 read -e -p " 请输入数字 [0-5]:" num
-case "$num" in
-	0)
-	Update_Shell
-	;;
-	1)
-	install_iptables
-	;;
-	2)
-	Uninstall_forwarding
-	;;
-	3)
-	View_forwarding
-	;;
-	4)
-	Add_forwarding
-	;;
-	5)
-	Del_forwarding
-	;;
-	*)
-	echo "请输入正确数字 [0-5]"
-	;;
-esac
+
+do
+	case "$num" in
+		0)
+		Update_Shell
+		;;
+		1)
+		install_iptables
+		;;
+		2)
+		Uninstall_forwarding
+		;;
+		3)
+		View_forwarding
+		;;
+		4)
+		Add_forwarding
+		;;
+		5)
+		Del_forwarding
+		;;
+		*)
+		echo "请输入正确数字 [0-5]"
+		;;
+	esac
+done
