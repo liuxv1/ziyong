@@ -108,9 +108,9 @@ Set_forwarding_type(){
 	fi
 }
 Set_Config(){
-	Set_local_port
 	Set_forwarding_port
 	Set_forwarding_ip
+	Set_local_port
 	Set_local_ip
 	Set_forwarding_type
 	echo && echo -e "——————————————————————————————
